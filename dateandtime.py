@@ -6,7 +6,7 @@ print("The current timezone is {0} with an offset of {1}".format(time.tzname[0],
 
 if time.daylight != 0:
     print("\tDaylight Saving Time (DST) is defined for this location")
-print("\tThe DST timezone name is " + time.tzname[1])
+    print("\tThe DST timezone name is " + time.tzname[1])
 
 print("Local time is " + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))
 print("UTC is " + time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime()))
