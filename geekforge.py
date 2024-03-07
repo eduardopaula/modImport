@@ -17,7 +17,7 @@ def h():
 
 
 # Global scope
-print('global : ', a)
+print('global  ', a)
 f()
 print('global : ', a)
 g()
