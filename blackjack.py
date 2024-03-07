@@ -44,7 +44,7 @@ def deal_dealer():
 
 
 def deal_player():
-    # player_score = 0
+    player_score = 0
     card_value = deal_card(player_card_frame)[0]
     if card_value == 1 and not player_ace:
         card_value = 11
