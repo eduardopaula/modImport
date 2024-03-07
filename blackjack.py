@@ -5,8 +5,6 @@ try:
 except ImportError:  # python 2
     import Tkinter as tkinter
 
-mainWindow = tkinter.Tk()
-
 
 def load_images(card_images):
     suits = ['heart', 'club', 'diamond', 'spade']
@@ -31,9 +29,40 @@ def load_images(card_images):
             image = tkinter.PhotoImage(file=name)
             card_images.append((10, image,))
 
+
+def deal_card(frame):
+    # pop the next card off the top of the deck
+    next_card = deck.pop(0)
+    # add the image to a Label and display the label
+    tkinter.Label(frame, image=next_card[1], relief='raised').pack(side='left')
+    # now return the card's face value
+    return next_card
+
+
+def deal_dealer():
+    deal_card(dealer_card_frame)
+
+
+def deal_player():
+    # player_score = 0
+    card_value = deal_card(player_card_frame)[0]
+    if card_value == 1 and not player_ace:
+        card_value = 11
+    player_score += card_value
+    # if we would bust, check if there is an ace and subtract
+    if player_score > 21 and player_ace:
+        player_score -= 10
+    player_score_label.set(player_score)
+    if player_score > 21:
+        result_text.set("Dealer wins!")
+
+
+mainWindow = tkinter.Tk()
+
 # Set up the screen and frames for the dealer and player
 mainWindow.title("Black Jack")
 mainWindow.geometry("640x480")
+mainWindow.configure(background='green')
 
 result_text = tkinter.StringVar()
 result = tkinter.Label(mainWindow, textvariable=result_text)
@@ -50,6 +79,9 @@ dealer_card_frame = tkinter.Frame(card_frame, background="green")
 dealer_card_frame.grid(row=0, column=1, sticky="ew", rowspan=2)
 
 player_score_label = tkinter.IntVar()
+player_score = 0
+player_ace = False
+
 tkinter.Label(card_frame, text="Player", background="green", fg="white").grid(row=2, column=0)
 tkinter.Label(card_frame, textvariable=player_score_label, background="green", fg="white").grid(row=3, column=0)
 # embedded frame to hold the card images
@@ -59,10 +91,10 @@ player_card_frame.grid(row=2, column=1, sticky='ew', rowspan=2)
 button_frame = tkinter.Frame(mainWindow)
 button_frame.grid(row=3, column=0, columnspan=3, sticky='w')
 
-dealer_button = tkinter.Button(button_frame, text="Dealer")
+dealer_button = tkinter.Button(button_frame, text="Dealer", command=deal_dealer)
 dealer_button.grid(row=0, column=0)
 
-player_button = tkinter.Button(button_frame, text="Player")
+player_button = tkinter.Button(button_frame, text="Player", command=deal_player)
 player_button.grid(row=0, column=1)
 
 # load cards
