@@ -38,5 +38,5 @@ def fibonacci(n):
             n_minus1 = result
     return result
 
-for i in range(36):
-    print(i, fib(i), "\t", fibonacci(i))
+for i in range(37):
+    print(i, fibonacci(i), "\t", fib(i))
